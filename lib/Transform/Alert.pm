@@ -1,6 +1,6 @@
 package Transform::Alert;
 
-our $VERSION = '0.90_001'; # VERSION
+our $VERSION = '0.90_002'; # VERSION
 # ABSTRACT: Transform alerts from one type to another type
 
 use sanity;
@@ -183,8 +183,33 @@ Transform::Alert - Transform alerts from one type to another type
 
 =head1 DESCRIPTION
 
-Ever have a need to transform one kind of alertE<sol>message into another?  IE: Taking a bunch of alert emails and converting them into Syslogs, so
-that they can be sent to a real EMS.  Then this platform delivers.
+Ever have a need to transform one kind of alertE<sol>message into another?  For example:
+
+=over
+
+=item *
+
+Taking a bunch of alert emails and converting them into Syslogs
+
+=item *
+
+Converting Syslog alerts to SNMP traps
+
+=item *
+
+Converting SNMP traps to Syslogs
+
+=item *
+
+Traps to email
+
+=item *
+
+Anything to anything
+
+=back
+
+Then this platform delivers.
 
 Transform::Alert is a highly extensible platform to transform alerts from anything to anything else.  Everything is ran through a configuration
 file, a couple of templates, and L<Transform::Alert's daemon app|transalert_ctl>.
@@ -361,7 +386,7 @@ Here's an example that looks similar to the input one above:
 
 =head2 Mungers
 
-Mungers are an optional second piece to input template structure.  Regular expressions, as powerful as they are with finding and capturing
+Mungers are an optional second piece to the input template structure.  Regular expressions, as powerful as they are with finding and capturing
 information, only do just that.  Sometimes you need to warp the information you've captured to fit the mold that the output can use.  Or 
 sometimes you need to validate the input in a better fashion than REs can provide.  Mungers fit both of those roles.
 
@@ -447,7 +472,7 @@ those networks/channels and get help:
 
 irc.perl.org
 
-You can connect to the server at 'irc.perl.org' and join this channel: #distzilla then talk to this person for help: SineSwiper.
+You can connect to the server at 'irc.perl.org' and join this channel: #web-simple then talk to this person for help: SineSwiper.
 
 =back
 
