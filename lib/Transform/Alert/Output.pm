@@ -1,6 +1,6 @@
 package Transform::Alert::Output;
 
-our $VERSION = '0.90_002'; # VERSION
+our $VERSION = '0.90_003'; # VERSION
 # ABSTRACT: Base role for Transform::Alert output types
 
 use sanity;

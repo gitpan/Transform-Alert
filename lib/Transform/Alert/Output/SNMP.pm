@@ -1,6 +1,6 @@
 package Transform::Alert::Output::SNMP;
 
-our $VERSION = '0.90_002'; # VERSION
+our $VERSION = '0.90_003'; # VERSION
 # ABSTRACT: Transform alerts to SNMP traps (base class)
 
 use sanity;
