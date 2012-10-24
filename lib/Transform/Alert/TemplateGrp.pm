@@ -1,13 +1,13 @@
 package Transform::Alert::TemplateGrp;
 
-our $VERSION = '0.90_003'; # VERSION
+our $VERSION = '0.91'; # VERSION
 # ABSTRACT: Base class for Transform::Alert template groups
 
 use sanity;
 use Moo;
 use MooX::Types::MooseLike::Base qw(Bool Str ArrayRef ScalarRef HashRef InstanceOf ConsumerOf);
 
-use Template;
+use Template 2.24;
 use Data::Dump 'pp';
 use File::Slurp 'read_file';
 use Module::Load;  # yes, using both Class::Load and Module::Load, as M:L will load files

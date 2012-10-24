@@ -1,6 +1,6 @@
 package Transform::Alert::Output::Syslog;
 
-our $VERSION = '0.90_003'; # VERSION
+our $VERSION = '0.91'; # VERSION
 # ABSTRACT: Transform alerts to Syslog alerts
 
 use sanity;

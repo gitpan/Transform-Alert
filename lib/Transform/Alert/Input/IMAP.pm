@@ -1,6 +1,6 @@
 package Transform::Alert::Input::IMAP;
 
-our $VERSION = '0.90_003'; # VERSION
+our $VERSION = '0.91'; # VERSION
 # ABSTRACT: Transform alerts from IMAP messages
 
 use sanity;
@@ -24,7 +24,11 @@ has _conn => (
    isa       => InstanceOf['Mail::IMAPClient'],
    lazy      => 1,
    default   => sub {
-      Mail::IMAPClient->new( %{shift->connopts} )
+      my $self = shift;
+      Mail::IMAPClient->new( %{$self->connopts} ) || do {
+         $self->log->error('IMAP New/Connect/Login failed: '.$@);
+         return;
+      };
    },
 );
 has _list => (
@@ -63,11 +67,11 @@ sub open {
       }
    }
 
-   my @msgs = ($self->has_parsed_folder ? $imap->messages : $imap->unseen) || do {
+   my $msgs = ($self->has_parsed_folder ? $imap->messages : $imap->unseen) || do {
       $self->log->error('IMAP Messages failed: '.$imap->LastError);
       return;
    };
-   $self->_list(\@msgs);
+   $self->_list($msgs);
    
    return 1;
 }

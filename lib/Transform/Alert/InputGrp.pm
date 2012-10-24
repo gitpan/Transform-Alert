@@ -1,6 +1,6 @@
 package Transform::Alert::InputGrp;
 
-our $VERSION = '0.90_003'; # VERSION
+our $VERSION = '0.91'; # VERSION
 # ABSTRACT: Base class for Transform::Alert input groups
 
 use sanity;

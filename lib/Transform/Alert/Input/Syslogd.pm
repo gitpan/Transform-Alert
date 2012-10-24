@@ -1,13 +1,13 @@
 package Transform::Alert::Input::Syslogd;
 
-our $VERSION = '0.90_003'; # VERSION
+our $VERSION = '0.91'; # VERSION
 # ABSTRACT: Transform alerts from an internal Syslog daemon
 
 use sanity;
 use Moo;
 use MooX::Types::MooseLike::Base qw(InstanceOf);
 
-use Net::Syslogd;
+use Net::Syslogd 0.04;
 
 with 'Transform::Alert::Input';
 
