@@ -1,6 +1,6 @@
 package Transform::Alert::Output::Null;
 
-our $VERSION = '0.91'; # VERSION
+our $VERSION = '0.92'; # VERSION
 # ABSTRACT: Transform alerts to NULL space
 
 use sanity;

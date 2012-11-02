@@ -32,8 +32,8 @@ my %WriteMakefileArgs = (
     "Config::General" => "2.38",
     "Data::Dump" => "1.10",
     "Email::Abstract" => "3.000",
+    "Email::MIME" => "1.862",
     "Email::Sender::Simple" => "0.000",
-    "Email::Simple" => "2.004",
     "File::Slurp" => "9999.14",
     "List::AllUtils" => "0.01",
     "Log::Log4perl" => "1.15",
@@ -51,7 +51,7 @@ my %WriteMakefileArgs = (
     "namespace::clean" => "0.06",
     "sanity" => "0.94"
   },
-  "VERSION" => "0.91",
+  "VERSION" => "0.92",
   "test" => {
     "TESTS" => "t/*.t"
   }
