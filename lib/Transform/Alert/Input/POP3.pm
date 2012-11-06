@@ -1,6 +1,6 @@
 package Transform::Alert::Input::POP3;
 
-our $VERSION = '0.92'; # VERSION
+our $VERSION = '0.93'; # VERSION
 # ABSTRACT: Transform alerts from POP3 messages
 
 use sanity;
@@ -9,6 +9,7 @@ use MooX::Types::MooseLike::Base qw(Str Int ArrayRef HashRef InstanceOf);
 
 use Net::POP3;
 use Email::MIME;
+use List::AllUtils 'first';
 
 with 'Transform::Alert::Input';
 
@@ -94,7 +95,10 @@ sub get {
    my $msg = join '', @$amsg;
    $msg =~ s/\r//g;
    my $pmsg = Email::MIME->new($msg);
-   my $body = $pmsg->body_str;
+   my $body = eval { $pmsg->body_str } || do {
+      my $part = first { $_ && $_->content_type =~ /^text\/plain/ } $pmsg->parts;
+      $part ? $part->body_str : $pmsg->body_raw;
+   };
    $body =~ s/\r//g;
    my $hash = {
       $pmsg->header_obj->header_pairs,
@@ -152,19 +156,17 @@ Transform::Alert::Input::POP3 - Transform alerts from POP3 messages
 
 =head1 DESCRIPTION
 
-This input type will read a POP3 mailbox and process each message through the 
-input template engine.  If it finds a match, the results of the match are sent
-to one or more outputs, depending on the group configuration.
+This input type will read a POP3 mailbox and process each message through the input template engine.  If it finds a match, the results of the
+match are sent to one or more outputs, depending on the group configuration.
 
-See L<Net::POP3> for a list of the ConnOpts section parameters.  The C<<< Username >>>
-and C<<< Password >>> options are included in this set, but not used in the POP3
-object's construction.
+See L<Net::POP3> for a list of the ConnOpts section parameters.  The C<<< Username >>> and C<<< Password >>> options are included in this set, but not used
+in the POP3 object's construction.
 
 =head1 OUTPUTS
 
 =head2 Text
 
-Full text of the message, including headers.  All CRs are stripped.
+Full text of the raw message, including headers.  All CRs are stripped.
 
 =head2 Preparsed Hash
 
@@ -172,15 +174,19 @@ Full text of the message, including headers.  All CRs are stripped.
        # Header pairs, as per Email::Simple::Header
        Email::Simple->new($msg)->header_obj->header_pairs,
  
-       # decoded via Email::MIME->new($msg)->body_str
+       # decoded via Email::MIME->new($msg)
+       # $pmsg->body_str, or body_str of the first text/plain part (if it croaks), or $pmsg->body_raw
        # (all \r are stripped)
        BODY => $str,  
     }
 
 =head1 CAVEATS
 
-All messages are deleted from the system, whether it was matched or not.  If you
-need to save your messages, you should consider using L<IMAP|Transform::Alert::Input::IMAP>.
+All messages are deleted from the system, whether it was matched or not.  If you need to save your messages, you should consider using
+L<IMAP|Transform::Alert::Input::IMAP>.
+
+The raw message isn't kept for the Munger.  If you really need it, you can implement an input RE template of C<<< (?<RAWMSG>[\s\S]+) >>>, and parse
+out the email message yourself.
 
 =head1 AVAILABILITY
 

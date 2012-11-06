@@ -1,6 +1,6 @@
 package Transform::Alert::Input;
 
-our $VERSION = '0.92'; # VERSION
+our $VERSION = '0.93'; # VERSION
 # ABSTRACT: Base role for Transform::Alert input types
 
 use sanity;

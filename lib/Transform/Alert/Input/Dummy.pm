@@ -1,6 +1,6 @@
 package Transform::Alert::Input::Dummy;
 
-our $VERSION = '0.92'; # VERSION
+our $VERSION = '0.93'; # VERSION
 # ABSTRACT: Transform alerts from random messages
 
 use sanity;
