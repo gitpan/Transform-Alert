@@ -1,6 +1,6 @@
 package Transform::Alert::Output::Email;
 
-our $VERSION = '0.93'; # VERSION
+our $VERSION = '0.94'; # VERSION
 # ABSTRACT: Transform alerts to emails
 
 use sanity;

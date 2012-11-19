@@ -1,6 +1,6 @@
 package Transform::Alert::TemplateGrp;
 
-our $VERSION = '0.93'; # VERSION
+our $VERSION = '0.94'; # VERSION
 # ABSTRACT: Base class for Transform::Alert template groups
 
 use sanity;

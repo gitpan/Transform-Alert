@@ -1,8 +1,31 @@
 Revision History for Transform-Alert
 ====================================
 
+v0.94 2012-11-19
+----------------
+
+commit fab2cd6e1bda6033a9b7ae05caf7cb0fb534bb06
+Merge: c0d370f 7301154
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Mon Nov 19 16:27:19 2012 -0500
+
+    Merge branch 'master' of github.com:SineSwiper/Transform-Alert
+
+commit c0d370f58152b3d1404497302047bf7b70052a54
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Mon Nov 19 16:26:24 2012 -0500
+
+    Force recreation of log file on move
+    IMAP: Better error handling
+
 v0.93 2012-11-06
 ----------------
+
+commit 7301154b198af4d7e215be700bee3f773bdbdadb
+Author: Byrd <loubbyrd@noclab01.et.ky.insightcom.com>
+Date:   Tue Nov 6 14:15:08 2012 -0500
+
+    Release v0.93
 
 commit 499ea6c372babb043931eba34d9aabef2a45d5c1
 Author: Brendan Byrd <Perl@ResonatorSoft.org>
