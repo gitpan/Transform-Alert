@@ -1,6 +1,22 @@
 Revision History for Transform-Alert
 ====================================
 
+v0.95 2012-11-21
+----------------
+
+commit fbda81b23b8c7575b2c7effe0c35156b3c37bd27
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Wed Nov 21 09:37:31 2012 -0500
+
+    TRACE fixes
+
+commit 76e3ea3dfc31ea385012c8ebd2e61160ea7ec451
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Wed Nov 21 08:53:26 2012 -0500
+
+    Add TRACE logging (and -vv option)
+    Add more Munger method testing
+
 v0.94 2012-11-19
 ----------------
 
