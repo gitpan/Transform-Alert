@@ -1,6 +1,6 @@
 package Transform::Alert::Input::Syslogd;
 
-our $VERSION = '0.95'; # VERSION
+our $VERSION = '1.00'; # VERSION
 # ABSTRACT: Transform alerts from an internal Syslog daemon
 
 use sanity;
@@ -27,9 +27,9 @@ sub opened { shift->_has_conn }
 sub get {
    my $self    = shift;
    my $syslogd = $self->_conn;
-   
+
    my $msg = $syslogd->get_message(Timeout => 0);
-   
+
    unless (defined $msg) {
       $self->log->error('Error grabbing Syslogd message: '.$syslogd->error);
       return;
@@ -38,14 +38,14 @@ sub get {
       $self->log->warn('No syslog message in queue during get()');
       return \(''), {};
    }
-   
+
    # rejoin message parts
    my $txt = $msg->remoteaddr.':'.$msg->remoteport.' - '.$msg->datagram;
    $msg->process_message;
    return (\$txt, {
       remoteaddr => $msg->remoteaddr,
       remoteport => $msg->remoteport,
-      
+
       priority => $msg->priority,
       facility => $msg->facility,
       severity => $msg->severity,
@@ -61,7 +61,7 @@ sub eof {
 
    # check if a message is waiting
    my $rin = '';
-   vec($rin, fileno($port), 1) = 1; 
+   vec($rin, fileno($port), 1) = 1;
    return not select($rin, undef, undef, 0);
 }
 
@@ -138,7 +138,7 @@ Brendan Byrd <BBYRD@CPAN.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Brendan Byrd.
+This software is Copyright (c) 2013 by Brendan Byrd.
 
 This is free software, licensed under:
 

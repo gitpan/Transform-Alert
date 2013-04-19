@@ -1,6 +1,6 @@
 package Transform::Alert::Output::Null;
 
-our $VERSION = '0.95'; # VERSION
+our $VERSION = '1.00'; # VERSION
 # ABSTRACT: Transform alerts to NULL space
 
 use sanity;
@@ -36,8 +36,9 @@ Transform::Alert::Output::Null - Transform alerts to NULL space
 
 =head1 DESCRIPTION
 
-This output type is mainly used for testing.  It can have its
-uses to send messages to the bitbucket, though.
+This output type is mainly used for testing.  It can have its uses to send messages to the bitbucket, though.
+
+A Template can be specified here to test out how an Output gets filled in.  The resulting string will be found in the logs.
 
 =head1 AVAILABILITY
 
@@ -53,7 +54,7 @@ Brendan Byrd <BBYRD@CPAN.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Brendan Byrd.
+This software is Copyright (c) 2013 by Brendan Byrd.
 
 This is free software, licensed under:
 

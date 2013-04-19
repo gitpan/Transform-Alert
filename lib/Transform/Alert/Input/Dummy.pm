@@ -1,6 +1,6 @@
 package Transform::Alert::Input::Dummy;
 
-our $VERSION = '0.95'; # VERSION
+our $VERSION = '1.00'; # VERSION
 # ABSTRACT: Transform alerts from random messages
 
 use sanity;
@@ -80,7 +80,7 @@ Brendan Byrd <BBYRD@CPAN.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Brendan Byrd.
+This software is Copyright (c) 2013 by Brendan Byrd.
 
 This is free software, licensed under:
 

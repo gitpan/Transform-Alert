@@ -1,11 +1,11 @@
 package Transform::Alert::Input::IMAP;
 
-our $VERSION = '0.95'; # VERSION
+our $VERSION = '1.00'; # VERSION
 # ABSTRACT: Transform alerts from IMAP messages
 
 use sanity;
 use Moo;
-use MooX::Types::MooseLike::Base qw(Str ArrayRef InstanceOf);
+use MooX::Types::MooseLike::Base qw(Str ArrayRef InstanceOf Maybe);
 
 use Mail::IMAPClient;
 use Email::MIME;
@@ -22,7 +22,7 @@ has parsed_folder => (
 
 has _conn => (
    is        => 'rw',
-   isa       => InstanceOf['Mail::IMAPClient'],
+   isa       => Maybe[InstanceOf['Mail::IMAPClient']],
    lazy      => 1,
    default   => sub {
       my $self = shift;
@@ -53,7 +53,9 @@ around BUILDARGS => sub {
 
 sub open {
    my $self = shift;
-   my $imap = $self->_conn || return;
+   my $imap = $self->_conn ||
+      # maybe+default+error still creates an undef attr, which would pass an 'exists' check on predicate
+      do { $self->_clear_conn; return; };
 
    # figure out which state it's in
    unless ($imap->IsSelected) {
@@ -64,9 +66,9 @@ sub open {
          $imap->login   || do { $self->log->error('IMAP Login failed: '        .$imap->LastError); return; };
       }
 
-      # might not have a folder set
-      unless ($imap->IsSelected) {
-         $imap->select('Inbox') || do { $self->log->error('IMAP Select failed: '.$imap->LastError); return; };
+      # might not have a folder set (or might have a specific Folder option)
+      if (!$imap->IsSelected || $self->connopts->{folder}) {
+         $imap->select($self->connopts->{folder} || 'Inbox') || do { $self->log->error('IMAP Select failed: '.$imap->LastError); return; };
       }
    }
 
@@ -81,13 +83,15 @@ sub open {
 
 sub opened {
    my $self = shift;
-   $self->_has_conn and $self->_conn->IsSelected;
+   $self->_has_conn and $self->_conn and $self->_conn->IsSelected;
 }
 
 sub get {
    my $self = shift;
    my $uid  = shift @{$self->_list};
-   my $imap = $self->_conn;
+   my $imap = $self->_conn ||
+      # maybe+default+error still creates an undef attr, which would pass an 'exists' check on predicate
+      do { $self->_clear_conn; return; };
 
    my $msg = $imap->message_string($uid) || do { $self->log->error('Error grabbing IMAP message '.$uid.': '.$imap->LastError); return; };
    $msg =~ s/\r//g;
@@ -118,7 +122,12 @@ sub eof {
 
 sub close {
    my $self = shift;
-   my $imap = $self->_conn;
+   my $imap = $self->_conn || do {
+      # maybe+default+error still creates an undef attr, which would pass an 'exists' check on predicate
+      $self->_clear_list;
+      $self->_clear_conn;
+      return;
+   };
 
    $self->_clear_list;
    my $is_valid = $self->opened;
@@ -175,10 +184,12 @@ Transform::Alert::Input::IMAP - Transform alerts from IMAP messages
 This input type will read a IMAP mailbox and process each message through the input template engine.  If it finds a match, the results of the
 match are sent to one or more outputs, depending on the group configuration.
 
-See L<Mail::IMAPClient|Mail::IMAPClient#Parameters> for a list of the ConnOpts section parameters.
+See L<Mail::IMAPClient|Mail::IMAPClient/Parameters> for a list of the ConnOpts section parameters.
 
 The C<<< ParsedFolder >>> option is special.  If set, it will move all parsed messages to that folder.  If not, it will rely on the Unread flag to
 figure out which messages have been parsed or not parsed.
+
+The C<<< Folder >>> option (from L<Mail::IMAPClient>) can be specified to use a different folder than the default Inbox.
 
 =head1 OUTPUTS
 
@@ -199,6 +210,10 @@ Full text of the raw message, including headers.  All CRs are stripped.
     }
 
 =head1 CAVEATS
+
+Special care should be made when using input templates on raw email messages.  For one, header order may change, which is difficult to
+manage with REs.  For another, the message is probably MIME-encoded and would contain 80-character splits.  Use of Mungers here is B<highly>
+recommended.
 
 You are responsible for setting up any archivingE<sol>deletion protocols for the mailbox, as this module will save everything (and potentially
 fill up the box).
@@ -223,7 +238,7 @@ Brendan Byrd <BBYRD@CPAN.org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is Copyright (c) 2012 by Brendan Byrd.
+This software is Copyright (c) 2013 by Brendan Byrd.
 
 This is free software, licensed under:
 

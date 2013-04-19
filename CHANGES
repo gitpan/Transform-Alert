@@ -1,6 +1,44 @@
 Revision History for Transform-Alert
 ====================================
 
+v1.00 2013-04-19
+----------------
+
+commit 54e829b68d08253f716879101d1d59c41cb18b3a
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Fri Apr 19 13:44:48 2013 -0400
+
+    Clean up Variable Passing graphic
+
+commit e1ae968b34085c3d9eb9d844de39691359b412b2
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Fri Apr 19 11:03:19 2013 -0400
+
+    Fix IMAP Folder option
+    Fix a few FATAL crashes, due to Input/IMAP errors
+    Clean up docs a bit
+    Add log line display for successful input template counts
+    Add support for multiple outputs via munger
+    Remove Output/Print.pm, since it didn't work, anyway
+
+commit 5217633e746e8605075a3f8f36258429078200d9
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Fri Feb 8 10:53:17 2013 -0500
+
+    Add Print output
+
+commit 3ef5a229ad0739c5f9b9cace22c5e7138bed5637
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Fri Feb 8 10:05:26 2013 -0500
+
+    Fix syntax bug
+
+commit 5ecf86d7bb4f8e6724e22f2517b5a1c727f977ef
+Author: Brendan Byrd <Perl@ResonatorSoft.org>
+Date:   Wed Jan 23 11:45:35 2013 -0500
+
+    Change some I/O constructors to not fatally crash the daemon on error
+
 v0.95 2012-11-21
 ----------------
 
@@ -33,51 +71,6 @@ Date:   Mon Nov 19 16:26:24 2012 -0500
 
     Force recreation of log file on move
     IMAP: Better error handling
-
-v0.93 2012-11-06
-----------------
-
-commit 7301154b198af4d7e215be700bee3f773bdbdadb
-Author: Byrd <loubbyrd@noclab01.et.ky.insightcom.com>
-Date:   Tue Nov 6 14:15:08 2012 -0500
-
-    Release v0.93
-
-commit 499ea6c372babb043931eba34d9aabef2a45d5c1
-Author: Brendan Byrd <Perl@ResonatorSoft.org>
-Date:   Tue Nov 6 14:09:45 2012 -0500
-
-    Fix IMAP/POP3 inputs to work with multipart/* MIME messages
-       (and not insta-die)
-
-v0.92 2012-11-02
-----------------
-
-commit 2b2f84f7f6c69db93fd73591bd0338a57367050c
-Author: Byrd <loubbyrd@noclab01.et.ky.insightcom.com>
-Date:   Fri Nov 2 17:24:59 2012 -0400
-
-    Release v0.92
-
-commit 590d78d857a1946a2302a733650cea13dca26638
-Author: Brendan Byrd <Perl@ResonatorSoft.org>
-Date:   Fri Nov 2 16:38:42 2012 -0400
-
-    Fix IMAP ParsedFolder option
-    Use Email::MIME for email message parsing
-    Strip \r from templates and messages
-    Replace Preparsed option with t/p hash passing
-    Add $tmpl_grp variable passing to Munger
-    Change some DEBUG->INFO lines for logging
-
-v0.91 2012-10-24
-----------------
-
-commit 993c3d0750ec0945ac2bfe8d253492995561c559
-Author: Byrd <loubbyrd@noclab01.et.ky.insightcom.com>
-Date:   Wed Oct 24 14:08:02 2012 -0400
-
-    Release v0.91
 
 ===================================
 End of changes in the last 365 days
